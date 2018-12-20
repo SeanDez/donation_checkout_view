@@ -9,6 +9,7 @@ const starting_state = {
   firstName : '',
   lastName : '',
   emailAddress : '',
+  donationInputField : null
 };
 
 const reducer = (previous_state = starting_state, action) => {

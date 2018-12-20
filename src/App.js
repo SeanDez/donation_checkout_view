@@ -78,7 +78,11 @@ const map_state_to_props = (state) => {
     referral1FirstName : state.referral1FirstName,
     referral2FirstName : state.referral2FirstName,
     referral1EmailAddress : state.referral1EmailAddress,
-    referral2EmailAddress : state.referral2EmailAddress
+    referral2EmailAddress : state.referral2EmailAddress,
+    donationCheckbox10 : state.donationCheckbox10,
+    donationCheckbox25 : state.donationCheckbox25,
+    donationCheckbox50 : state.donationCheckbox50,
+    donationInputField : state.donationInputField
   }
 };
 

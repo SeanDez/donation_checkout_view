@@ -21,7 +21,31 @@ export default class SelectDonation extends React.Component {
     
   };
   
+  clearTheOtherCheckboxes(amountToPreserve) {
+    if (amountToPreserve === 10) {
+      this.props.dispatchUpdateStateData(false, 'donationCheckbox25');
+      this.props.dispatchUpdateStateData(false, 'donationCheckbox50');
+    } else if (amountToPreserve === 25) {
+      this.props.dispatchUpdateStateData(false, 'donationCheckbox10');
+      this.props.dispatchUpdateStateData(false, 'donationCheckbox50');
+    } else if (amountToPreserve === 50) {
+      this.props.dispatchUpdateStateData(false, 'donationCheckbox10');
+      this.props.dispatchUpdateStateData(false, 'donationCheckbox25');
+    }
+  }
   
+  setDonationAmount() {
+    if (this.props.donationInputField) {
+      this.props.dispatchUpdateStateData(this.props.donationInputField, 'donationAmount')
+    } else if (this.props.donationCheckbox10) {
+      this.props.dispatchUpdateStateData(10, 'donationAmount')
+    } else if (this.props.donationCheckbox25) {
+      this.props.dispatchUpdateStateData(25, 'donationAmount')
+    } else if (this.props.donationCheckbox50) {
+      this.props.dispatchUpdateStateData(50, 'donationAmount')
+    }
+    console.log('donationAmount after button click: ', store.getState().donationAmount)
+  }
   
   render() {
     return (
@@ -33,34 +57,37 @@ export default class SelectDonation extends React.Component {
             <Form.Group className={field_group_style}>
               <Form.Field
                 control={Checkbox}
+                checked={this.props.donationCheckbox10}
                 label='$10'
                 value={10}
-                name='donation_amount'
                 onChange={() => {
-                  this.props.dispatchUpdateStateData('', 'customTextDonationAmount');
-                  this.props.dispatchUpdateStateData('10', 'radioDonationAmount');
-                  console.log(store.getState())
+                  this.props.dispatchUpdateStateData('', 'donationInputField');
+                  this.props.dispatchUpdateStateData(!this.props.donationCheckbox10, 'donationCheckbox10');
+                  console.log(store.getState());
+                  this.clearTheOtherCheckboxes(10);
                 }}
               />
               <Form.Field
                 control={Checkbox}
+                checked={this.props.donationCheckbox25}
                 label='$25'
                 value={25}
-                name='donation_amount'
                 onChange={() => {
-                  this.props.dispatchUpdateStateData('', 'customTextDonationAmount');
-                  this.props.dispatchUpdateStateData('25', 'radioDonationAmount');
+                  this.props.dispatchUpdateStateData('', 'donationInputField');
+                  this.props.dispatchUpdateStateData(!this.props.donationCheckbox25, 'donationCheckbox25');
+                  this.clearTheOtherCheckboxes(25);
                   console.log(store.getState())
                 }}
               />
               <Form.Field
                 control={Checkbox}
+                checked={this.props.donationCheckbox50}
                 label='$50'
                 value={50}
-                name='donation_amount'
                 onChange={() => {
-                  this.props.dispatchUpdateStateData('', 'customTextDonationAmount');
-                  this.props.dispatchUpdateStateData('50', 'radioDonationAmount');
+                  this.props.dispatchUpdateStateData('', 'donationInputField');
+                  this.props.dispatchUpdateStateData(!this.props.donationCheckbox50, 'donationCheckbox50');
+                  this.clearTheOtherCheckboxes(50);
                   console.log(store.getState())
                 }}
               />
@@ -75,16 +102,19 @@ export default class SelectDonation extends React.Component {
               <input
                 type='number'
                 placeholder='Custom Amount'
-                name='donation_amount'
-                id='custom_amount'
-                ref={this.customDonationInputRef}
+                value={this.props.donationInputField}
                 // value={store.donation_amount}
                 // defaultValue={store.donation_amount}
                 style={{marginBottom : '2vh'}}
+                onFocus={() => {
+                  this.props.dispatchUpdateStateData(false, 'donationCheckbox10');
+                  this.props.dispatchUpdateStateData(false, 'donationCheckbox25');
+                  this.props.dispatchUpdateStateData(false, 'donationCheckbox50');
+                  }
+                }
                 onChange={
                   e => {
-                    this.props.dispatchUpdateStateData('', 'radioDonationAmount');
-                    this.props.dispatchUpdateStateData(e.target.value, 'customTextDonationAmount');
+                    this.props.dispatchUpdateStateData(e.target.value, 'donationInputField');
                     console.log(store.getState());
                   }}
               />
@@ -95,6 +125,7 @@ export default class SelectDonation extends React.Component {
                 primary
                 onClick={(event) => {
                   event.preventDefault();
+                  this.setDonationAmount();
                   this.props.dispatchChangeCheckoutStep(checkoutSteps.paymentDetails);
                   console.log(store.getState().checkoutStep)
                 }}>Next Step
