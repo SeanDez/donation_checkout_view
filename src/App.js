@@ -31,23 +31,6 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           
-          {console.log('store.checkoutStep', this.props.checkoutStep)}
-          {console.log('store', store)}
-          
-          <Transition
-            visible={this.props.checkoutStep === 'paymentDetails'}
-            // animation='scale'
-            duration={3000}
-          >
-            <h2>This text will be the transition target</h2>
-          </Transition>
-          
-          <button
-            onClick={e => {
-              this.setState({ testToggle : !this.state.testToggle })
-            }}
-          >{this.state.testToggle ? 'Turn Off Again' : 'Turn On Again'}</button>
-          
           <Modal
             trigger={<Button color='purple'>Donate</Button>}
             size='small'

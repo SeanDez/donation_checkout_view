@@ -6,6 +6,9 @@ import ReduxThunk from "redux-thunk";
 const starting_state = {
   log_to_console : 0,
   checkoutStep : 'selectDonation',
+  firstName : '',
+  lastName : '',
+  emailAddress : '',
 };
 
 const reducer = (previous_state = starting_state, action) => {

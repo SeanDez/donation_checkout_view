@@ -41,12 +41,12 @@ export default class Referrals extends React.Component {
       >
         
         <div className={all_referral_groups}>
-          <Form.Group className={field_group_style}>
+          <Form.Group className={field_group_style} style={{ position : 'relative' }}>
             <Form.Input
               placeholder='Name of Friend/Family Member'
               className='referralInput'
               name='referral_1_name'
-              style={{ marginBottom: '1vh', width: "265px" }}
+              style={{ marginBottom: '1vh', maxWidth : '100% !important', flexBasis: '285px !important' }}
               onChange={e => {
                 this.props.dispatchUpdateStateData(e.target.value, 'referral1FirstName');
                 console.log(store.getState())
@@ -56,7 +56,7 @@ export default class Referrals extends React.Component {
               placeholder="This Person's Email"
               className='referralInput'
               name='referral_1_email'
-              style={{ width: "265px" }}
+              style={{ maxWidth : '100%', flexBasis: '285px' }}
               onChange={e => this.props.dispatchUpdateStateData(
                 e.target.value, 'referral1EmailAddress'
               )}
@@ -68,7 +68,7 @@ export default class Referrals extends React.Component {
               placeholder='Another Friend/Family Member'
               className='referralInput'
               name='referral_2_name'
-              style={{ marginBottom: '1vh', width: "265px" }}
+              style={{ marginBottom: '1vh', maxWidth : '100%', flexBasis: '285px' }}
               onChange={e => this.props.dispatchUpdateStateData(
                 e.target.value, 'referral2FirstName'
               )}
@@ -77,7 +77,7 @@ export default class Referrals extends React.Component {
               placeholder="2nd Person's Email"
               className='referralInput'
               name='referral_2_email'
-              style={{ width: "265px" }}
+              style={{ maxWidth : '100%', flexBasis: '285px' }}
               onChange={e => this.props.dispatchUpdateStateData(
                 e.target.value, 'referral2EmailAddress'
               )}
@@ -93,16 +93,9 @@ export default class Referrals extends React.Component {
               console.log('e', e)
             }}
           >Refer Friends & Family</Button>
-          {/*<button*/}
-            {/*form='referralForm'*/}
-            {/*type='submit'*/}
-          {/*>HTML button</button>*/}
           <Button>No Thanks</Button>
         </div>
-        
       </Form>
-      
-      
     </Modal.Content>
   </React.Fragment>
   )}}
@@ -119,17 +112,18 @@ const field_group_style = css`
   flex-direction: column;
   flex-wrap: wrap;
   overflow: hidden;
-  //border: 3px dotted blueviolet;
+  border: 3px dotted blueviolet;
 `;
 
 const button_group_style = css`
   display: flex;
   justify-content: center;
+  margin-top: 2vh;
 `;
 
 const all_referral_groups = css`
   display: flex;
-  //justify-content: center;
+  justify-content: center;
   //align-items: center;
   //border: 3px dotted pink;
   margin-left: auto !important;

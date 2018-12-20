@@ -1,6 +1,6 @@
 import React                               from "react";
 import {css}                               from "emotion";
-import {Button, Modal, Form, Input, Radio} from 'semantic-ui-react';
+import {Button, Modal, Form, Input, Checkbox} from 'semantic-ui-react';
 import store                               from "../reducer";
 import {checkoutSteps}                     from "../constants";
 
@@ -32,7 +32,7 @@ export default class SelectDonation extends React.Component {
           <Form>
             <Form.Group className={field_group_style}>
               <Form.Field
-                control={Radio}
+                control={Checkbox}
                 label='$10'
                 value={10}
                 name='donation_amount'
@@ -43,7 +43,7 @@ export default class SelectDonation extends React.Component {
                 }}
               />
               <Form.Field
-                control={Radio}
+                control={Checkbox}
                 label='$25'
                 value={25}
                 name='donation_amount'
@@ -54,7 +54,7 @@ export default class SelectDonation extends React.Component {
                 }}
               />
               <Form.Field
-                control={Radio}
+                control={Checkbox}
                 label='$50'
                 value={50}
                 name='donation_amount'
@@ -64,10 +64,14 @@ export default class SelectDonation extends React.Component {
                   console.log(store.getState())
                 }}
               />
+            </Form.Group>
+  
+            <div className={wrapperCenterStyle} style={{ margin : '2vh 0' }}>
+              <p>OR</p>
+            </div>
             
-              <p style={{ marginLeft : "2vw" }}>OR</p>
-            
-              {/* Semantic UI's function component was causing this issue */}
+            <div className={wrapperCenterStyle} style={{ margin : '2vh 0' }}>
+            {/* Semantic UI's function component was causing this issue */}
               <input
                 type='number'
                 placeholder='Custom Amount'
@@ -81,11 +85,12 @@ export default class SelectDonation extends React.Component {
                   e => {
                     this.props.dispatchUpdateStateData('', 'radioDonationAmount');
                     this.props.dispatchUpdateStateData(e.target.value, 'customTextDonationAmount');
-                  console.log(store.getState());
-                }}
+                    console.log(store.getState());
+                  }}
               />
-              
-              
+            </div>
+  
+            <div className={wrapperCenterStyle}>
               <Button
                 primary
                 onClick={(event) => {
@@ -94,10 +99,9 @@ export default class SelectDonation extends React.Component {
                   console.log(store.getState().checkoutStep)
                 }}>Next Step
               </Button>
-              
-              
-            </Form.Group>
-        
+            </div>
+
+
           </Form>
         </Modal.Content>
       </React.Fragment>
@@ -112,5 +116,21 @@ const field_group_style = css`
   display: flex;
   justify-content: space-around;
   align-items: baseline;
+  max-width: 200px;
+  line-height: 5vh;
   //border: 3px dotted pink;
+`;
+
+const centerStyle = css`
+  text-align: center;
+  margin-left : auto !important;
+  margin-right : auto !important;
+  //padding-left: auto !important;
+  //padding-right: auto !important;
+  border: 3px dotted lightseagreen;
+`;
+
+const wrapperCenterStyle = css`
+  display: flex;
+  justify-content: center;
 `;
