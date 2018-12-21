@@ -18,12 +18,17 @@ class StripeCheckoutForm extends React.Component {
     invalidLengthFirstName : false,
     invalidLengthLastName : false,
     invalidEmail : false,
-    bigWidth : false
+    bigWidth : false,
+    paymentRequestPending : false,
   };
   
   
   createStripeToken = event => {
     event.preventDefault();
+    this.setState({
+      paymentRequestPending : true
+    });
+    
     this.props.stripe.createToken({
       name : `${this.props.firstName} ${this.props.lastName}`,
       amount : this.props.donationAmount
@@ -52,9 +57,13 @@ class StripeCheckoutForm extends React.Component {
       })
       // set response flips state to next checkout step
         .then(responseObject => {
+          this.setState({
+            paymentRequestPending : false // for the loader button
+          });
+          
           console.log('responseObject in React', responseObject);
           console.log('responseObject.data in React', responseObject.data);
-          this.props.dispatchUpdateStateData(responseObject.data.checkoutStep, 'checkoutStep');
+          this.props.dispatchUpdateStateData(responseObject.data.checkoutStep, 'checkoutStep'); // referrals
           this.props.dispatchUpdateStateData(responseObject.data.donorId, 'donorId')
         })
       .catch(e => console.log(e));
@@ -226,7 +235,10 @@ class StripeCheckoutForm extends React.Component {
               />
         
               <div className={ button_style }>
-                <Button primary>Complete Payment</Button>
+                <Button
+                  primary
+                  loading={this.state.paymentRequestPending}
+                >Complete Payment</Button>
               </div>
             </Form>
           </Modal.Content></div>

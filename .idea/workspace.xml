@@ -2,10 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c39ae40a-fc06-4f8c-bd97-9f2987bdbbd9" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/PaymentDetails.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/PaymentDetails.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Referrals.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Referrals.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/SelectDonation.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/SelectDonation.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/StripeCheckoutForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/StripeCheckoutForm.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -52,8 +48,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/components/StripeCheckoutForm.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="297" column="23" selection-start-line="297" selection-start-column="23" selection-end-line="297" selection-end-column="23" />
+            <state relative-caret-position="184">
+              <caret line="30" column="4" lean-forward="true" selection-start-line="30" selection-start-column="4" selection-end-line="30" selection-end-column="4" />
               <folding>
                 <element signature="e#0#55#0" expanded="true" />
               </folding>
@@ -239,12 +235,12 @@
       <workItem from="1543866081883" duration="41954000" />
       <workItem from="1544371609183" duration="96246000" />
       <workItem from="1545061983839" duration="17152000" />
-      <workItem from="1545232369799" duration="42697000" />
+      <workItem from="1545232369799" duration="45301000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="363866000" />
+    <option name="totallyTimeSpent" value="366470000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -257,7 +253,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="838" y="39" width="762" height="810" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" x="602" y="54" width="236" height="555" id="Project" order="0" type="FLOATING" weight="0.27995256" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
@@ -457,8 +452,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/components/StripeCheckoutForm.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="297" column="23" selection-start-line="297" selection-start-column="23" selection-end-line="297" selection-end-column="23" />
+        <state relative-caret-position="184">
+          <caret line="30" column="4" lean-forward="true" selection-start-line="30" selection-start-column="4" selection-end-line="30" selection-end-column="4" />
           <folding>
             <element signature="e#0#55#0" expanded="true" />
           </folding>
