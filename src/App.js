@@ -6,10 +6,10 @@ import PaymentDetails from "./components/PaymentDetails";
 import Referrals from "./components/Referrals";
 import ArticlesList from './components/ArticlesList';
 
-import {connect} from "react-redux";
+import {connect}                                          from "react-redux";
 
 import './semantic/dist/semantic.min.css';
-import {Modal, Header, Button, Form, Transition} from "semantic-ui-react";
+import {Modal, Header, Button, Form, Transition, Message} from "semantic-ui-react";
 
 import Redux from "redux";
 import ReactRedux from "react-redux";
@@ -22,15 +22,11 @@ require('dotenv').load();
 /// App component
 class App extends Component {
   
-  state = {
-    testToggle : false
-  };
   
   render() {
     return (
       <div className="App">
         <header className="App-header">
-          
           <Modal
             trigger={<Button color='purple'>Donate</Button>}
             size='small'

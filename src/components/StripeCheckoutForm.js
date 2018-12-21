@@ -1,7 +1,7 @@
 import React                              from "react";
 import "../App.css";
 import {injectStripe, CardElement, CardNumberElement, CardCVCElement, PostalCodeElement, PaymentRequestButtonElement} from "react-stripe-elements";
-import {Button, Modal, Form, Input, Radio} from 'semantic-ui-react';
+import {Button, Modal, Form, Input, Message} from 'semantic-ui-react';
 import {css}                               from "emotion";
 import PaymentDetails
                                            from "./PaymentDetails";
@@ -18,6 +18,7 @@ class StripeCheckoutForm extends React.Component {
     invalidLengthFirstName : false,
     invalidLengthLastName : false,
     invalidEmail : false,
+    bigWidth : false
   };
   
   
@@ -147,12 +148,22 @@ class StripeCheckoutForm extends React.Component {
         <div id='stripeContainer' className={containerStyle}>
           <Modal.Content>
             <Form onSubmit={this.createStripeToken}>
-        
+  
+              {/* This area is display:none unless the inputs expand to a single row */}
+              {/* ALL Validation Messages*/}
+              {this.state.invalidCharactersFirstName && <p className={validationMessageTopStyle}>First Name should only have letters</p>}
+              {this.state.invalidLengthFirstName && <p className={validationMessageTopStyle}>First Name must be between 2 to 15 characters long</p>}
+              {this.state.invalidCharactersLastName && <p className={validationMessageTopStyle}>Last Name should only have letters</p> }
+              {this.state.invalidLengthLastName && <p className={validationMessageTopStyle}>Last Name must be between 2 to 25 characters long</p>}
+              {this.state.invalidEmail &&
+               <p className={validationMessageTopStyle}>Please enter a valid email address</p>}
+  
               <Form.Group widths='equal' className={formGroupStyle}>
                 
                 {/* First Name Validation Messages*/}
-                {this.state.invalidCharactersFirstName && <p className={validationMessageStyle}>First Name should only have letters</p> }
-                {this.state.invalidLengthFirstName && <p className={validationMessageStyle}>First Name must be between 2 to 15 characters long</p>}
+                {this.state.invalidCharactersFirstName && <p className={validationMessageIntertwinedStyle}>First Name should only have letters</p>}
+                {this.state.invalidLengthFirstName && <p className={validationMessageIntertwinedStyle}>First Name must be between 2 to 15 characters long</p>}
+                
                 
                 <Form.Input
                   type='text'
@@ -171,8 +182,8 @@ class StripeCheckoutForm extends React.Component {
                 />
                 
                 {/* error messages */}
-                {this.state.invalidCharactersLastName && <p className={validationMessageStyle}>Last Name should only have letters</p> }
-                {this.state.invalidLengthLastName && <p className={validationMessageStyle}>Last Name must be between 2 to 25 characters long</p>}
+                {this.state.invalidCharactersLastName && <p className={validationMessageIntertwinedStyle}>Last Name should only have letters</p> }
+                {this.state.invalidLengthLastName && <p className={validationMessageIntertwinedStyle}>Last Name must be between 2 to 25 characters long</p>}
                 
                 <Form.Input
                   type='text'
@@ -192,7 +203,7 @@ class StripeCheckoutForm extends React.Component {
                 
                 
                 {this.state.invalidEmail &&
-                 <p className={validationMessageStyle}>Please enter a valid email address</p>}
+                 <p className={validationMessageIntertwinedStyle}>Please enter a valid email address</p>}
                 
                 <Form.Input
                   type='text'
@@ -253,7 +264,7 @@ const button_style = css`
 `;
 
 const cardElementStyle = css`
-  //border: .2px solid rgba(40, 41, 44, 0.15);
+  border: .2px solid rgba(40, 41, 44, 0.15);
   //border-radius: 3px; // breaks the whole border for some reason
   color: rgba(40, 41, 44, 0.15);
   height: 38px;
@@ -269,17 +280,31 @@ const cardElementStyle = css`
   }
 `;
 
-const validationMessageStyle = css`
+const validationMessageIntertwinedStyle = css`
   color: #8c0615;
-  border: 1px dotted pink;
+  //border: 3px dotted pink;
   margin-left: 2vw;
+  display: block;
+  @media (min-width: 770px) {
+    display: none;
+  }
+`;
+
+const validationMessageTopStyle = css`
+  color: #8c0615;
+  //border: 3px dotted pink;
+  margin-left: 2vw;
+    display: none;
+  @media (min-width: 770px) {
+    display: block;
+  }
 `;
 
 const cardOptions = {
   style : {
     base : {
-      border: '1px solid #9e2146 !important',
-      color: '#9e2146',
+      border: '1px solid #9e2146 !important', // doesn't work
+      // color: '#9e2146', // does work
     }
     // invalid: {}
   }

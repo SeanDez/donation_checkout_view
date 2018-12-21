@@ -1,8 +1,8 @@
-import React                               from "react";
-import {css}                               from "emotion";
-import {Button, Modal, Form, Input, Checkbox} from 'semantic-ui-react';
-import store                               from "../reducer";
-import {checkoutSteps}                     from "../constants";
+import React                                           from "react";
+import {css}                                           from "emotion";
+import {Button, Modal, Form, Input, Checkbox, Message} from 'semantic-ui-react';
+import store                                           from "../reducer";
+import {checkoutSteps}                                 from "../constants";
 
 
 export default class SelectDonation extends React.Component {
@@ -50,7 +50,6 @@ export default class SelectDonation extends React.Component {
   render() {
     return (
       <React.Fragment>
-        {console.log('starting state onload', store.getState())}
         <Modal.Header>Choose an amount</Modal.Header>
         <Modal.Content >
           <Form>
