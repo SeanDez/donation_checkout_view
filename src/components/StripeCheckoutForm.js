@@ -20,7 +20,33 @@ class StripeCheckoutForm extends React.Component {
     invalidEmail : false,
     bigWidth : false,
     paymentRequestPending : false,
+    canNotAdvance : true
   };
+  
+  
+  checkIfReadyToAdvance() {
+    if (
+      this.props.firstName &&
+      this.props.lastName &&
+      this.props.emailAddress &&
+      this.props.creditCardValueIsThere &&
+      this.state.invalidCharactersFirstName === false &&
+      this.state.invalidCharactersLastName === false &&
+      this.state.invalidLengthFirstName === false &&
+      this.state.invalidLengthLastName === false &&
+      this.state.invalidEmail === false
+    ) {
+      this.setState({
+        canNotAdvance : false
+      });
+      console.log("ready");
+    } else {
+      this.setState({
+        canNotAdvance : true // in case all values are falsey again
+      });
+      console.log("not ready");
+    }
+  }
   
   
   createStripeToken = event => {
@@ -147,6 +173,19 @@ class StripeCheckoutForm extends React.Component {
   }
   
   componentDidUpdate(prevProps, prevState, snapshot) {
+    if (
+      this.props.firstName !== prevProps.firstName ||
+      this.props.lastName !== prevProps.lastName ||
+      this.props.emailAddress !== prevProps.emailAddress ||
+      this.props.creditCardValueIsThere !== prevProps.creditCardValueIsThere ||
+      this.state.invalidCharactersFirstName !== prevState.invalidCharactersFirstName ||
+      this.state.invalidCharactersLastName !== prevState.invalidCharactersLastName ||
+      this.state.invalidLengthFirstName !== prevState.invalidLengthFirstName ||
+      this.state.invalidLengthLastName !== prevState.invalidLengthLastName ||
+      this.state.invalidEmail !== prevState.invalidEmail
+    ) {
+      this.checkIfReadyToAdvance();
+    }
   }
   
   
@@ -232,11 +271,20 @@ class StripeCheckoutForm extends React.Component {
               <CardElement
                 className={cardElementStyle}
                 {...cardOptions}
+                onChange={(changeObject) => {
+                  this.props.dispatchUpdateStateData(
+                    changeObject.complete, 'creditCardValueIsThere');
+                    // true if value is there
+                  console.log('changeObject', changeObject);
+                  console.log('changeObject.complete', changeObject.complete);
+  
+                }}
               />
         
               <div className={ button_style }>
                 <Button
                   primary
+                  disabled={this.state.canNotAdvance}
                   loading={this.state.paymentRequestPending}
                 >Complete Payment</Button>
               </div>

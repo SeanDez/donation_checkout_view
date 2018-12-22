@@ -4,10 +4,15 @@ import {Button, Modal, Form, Input, Radio} from 'semantic-ui-react';
 import Axios from 'axios';
 import store from '../reducer';
 import "../App.css";
+import Validator from "validator";
 
 require('dotenv').load();
 
 export default class Referrals extends React.Component {
+  
+  state = {
+    canNotSaveAReferral : true
+  };
   
   saveOptionalReferrals = (event) => {
     event.preventDefault();
@@ -28,7 +33,25 @@ export default class Referrals extends React.Component {
       .catch(e => console.log('error', e))
   };
   
-
+  checkIfCanSaveAReferral() {
+    if (Validator.isEmail(this.props.referral1EmailAddress)) {
+      this.setState({
+        canNotSaveAReferral : false // careful. double inversion
+      })
+    } else {
+      this.setState({
+        canNotSaveAReferral : true
+      })
+    }
+  }
+  
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevState.canNotSaveAReferral !== this.state.canNotSaveAReferral) {
+      this.checkIfCanSaveAReferral();
+    }
+  }
+  
+  
   render() {
   return (
   <React.Fragment>
@@ -83,6 +106,7 @@ export default class Referrals extends React.Component {
   
         <div className={button_group_style}>
           <Button primary
+            disabled={this.state.canNotSaveAReferral}
             form='referralForm'
             type='submit'
             onClick={e => {

@@ -32,28 +32,24 @@ class App extends Component {
             size='small'
           >
           
-          <SelectDonation {...this.props} />
-          <PaymentDetails {...this.props} />
-          <Referrals {...this.props} />
-          <ArticlesList {...this.props} />
+          {/*<SelectDonation {...this.props} />*/}
+          {/*<PaymentDetails {...this.props} />*/}
+          {/*<Referrals {...this.props} />*/}
+          {/*<ArticlesList {...this.props} />*/}
           
           
-          {/*{this.props.checkoutStep === checkoutSteps.selectDonation &&*/}
-           {/*<SelectDonation*/}
-            {/*dispatch_set_donation_amount = {this.props.dispatch_set_donation_amount}*/}
-            {/*dispatchChangeCheckoutStep={this.props.dispatchChangeCheckoutStep}*/}
-             {/*{...this.props} />*/}
-           {/*}*/}
-           {/**/}
-          {/*{this.props.checkoutStep === checkoutSteps.paymentDetails &&*/}
-           {/*<Transition visible={this.props.checkoutStep === 'paymentDetails'} animation='scale' duration={8000}>*/}
-            {/*<PaymentDetails {...this.props} />*/}
-           {/*</Transition>*/}
-             {/*}*/}
+          {this.props.checkoutStep === checkoutSteps.selectDonation &&
+           <SelectDonation
+            dispatch_set_donation_amount = {this.props.dispatch_set_donation_amount}
+            dispatchChangeCheckoutStep={this.props.dispatchChangeCheckoutStep}
+             {...this.props} /> }
+           
+          {this.props.checkoutStep === checkoutSteps.paymentDetails &&
+            <PaymentDetails {...this.props} /> }
           
-          {/*{this.props.checkoutStep === checkoutSteps.referrals && <Referrals {...this.props} />}*/}
+          {this.props.checkoutStep === checkoutSteps.referrals && <Referrals {...this.props} />}
           
-            {/*{this.props.checkoutStep === checkoutSteps.articlesList && <ArticlesList />}*/}
+            {this.props.checkoutStep === checkoutSteps.articlesList && <ArticlesList />}
           
           </Modal>
         </header>
@@ -78,7 +74,8 @@ const map_state_to_props = (state) => {
     donationCheckbox10 : state.donationCheckbox10,
     donationCheckbox25 : state.donationCheckbox25,
     donationCheckbox50 : state.donationCheckbox50,
-    donationInputField : state.donationInputField
+    donationInputField : state.donationInputField,
+    creditCardValueIsThere : state.creditCardValueIsThere
   }
 };
 

@@ -3,23 +3,32 @@ import {css}                                           from "emotion";
 import {Button, Modal, Form, Input, Checkbox, Message} from 'semantic-ui-react';
 import store                                           from "../reducer";
 import {checkoutSteps}                                 from "../constants";
-
+import NumberFormat from "react-number-format";
 
 export default class SelectDonation extends React.Component {
-  constructor(props) {
-    super(props);
-    this.customDonationInputRef = React.createRef();
-  }
   
-  
-  
-  handleInputChange = inputEvent => {
-    this.props.dispatch_set_donation_amount(inputEvent.target.value)
-      .then(propValue => console.log("mapStateToProps value: ", propValue));
-    // console.log(inputEvent.target.value);
-    console.log("getState value", store.getState());
-    
+  state = {
+    canNotAdvance : true
   };
+  
+  checkIfReadyToAdvance() {
+    if (
+      this.props.donationCheckbox10 ||
+      this.props.donationCheckbox25 ||
+      this.props.donationCheckbox50 ||
+      this.props.donationInputField
+    ) {
+      this.setState({
+        canNotAdvance : false
+      });
+      console.log("ready");
+    } else {
+      this.setState({
+        canNotAdvance : true // in case all values are falsey again
+      });
+      console.log("not ready");
+    }
+  }
   
   clearTheOtherCheckboxes(amountToPreserve) {
     if (amountToPreserve === 10) {
@@ -38,13 +47,25 @@ export default class SelectDonation extends React.Component {
     if (this.props.donationInputField) {
       this.props.dispatchUpdateStateData(this.props.donationInputField, 'donationAmount')
     } else if (this.props.donationCheckbox10) {
-      this.props.dispatchUpdateStateData(10, 'donationAmount')
+      this.props.dispatchUpdateStateData(1000, 'donationAmount')
     } else if (this.props.donationCheckbox25) {
-      this.props.dispatchUpdateStateData(25, 'donationAmount')
+      this.props.dispatchUpdateStateData(2500, 'donationAmount')
     } else if (this.props.donationCheckbox50) {
-      this.props.dispatchUpdateStateData(50, 'donationAmount')
+      this.props.dispatchUpdateStateData(5000, 'donationAmount')
     }
     console.log('donationAmount after button click: ', store.getState().donationAmount)
+  }
+  
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    // do a comparison
+    if (
+      prevProps.donationCheckbox10 !== this.props.donationCheckbox10 ||
+      prevProps.donationCheckbox25 !== this.props.donationCheckbox25 ||
+      prevProps.donationCheckbox50 !== this.props.donationCheckbox50 ||
+      prevProps.donationInputField !== this.props.donationInputField
+    ) {
+      this.checkIfReadyToAdvance();
+    }
   }
   
   render() {
@@ -58,36 +79,36 @@ export default class SelectDonation extends React.Component {
                 control={Checkbox}
                 checked={this.props.donationCheckbox10}
                 label='$10'
-                value={10}
+                value={1000}
                 onChange={() => {
                   this.props.dispatchUpdateStateData('', 'donationInputField');
                   this.props.dispatchUpdateStateData(!this.props.donationCheckbox10, 'donationCheckbox10');
-                  console.log(store.getState());
-                  this.clearTheOtherCheckboxes(10);
+                  this.clearTheOtherCheckboxes(1000);
+                  console.log('getState()', store.getState());
                 }}
               />
               <Form.Field
                 control={Checkbox}
                 checked={this.props.donationCheckbox25}
                 label='$25'
-                value={25}
+                value={2500}
                 onChange={() => {
                   this.props.dispatchUpdateStateData('', 'donationInputField');
                   this.props.dispatchUpdateStateData(!this.props.donationCheckbox25, 'donationCheckbox25');
-                  this.clearTheOtherCheckboxes(25);
-                  console.log(store.getState())
+                  this.clearTheOtherCheckboxes(2500);
+                  console.log('getState()', store.getState());
                 }}
               />
               <Form.Field
                 control={Checkbox}
                 checked={this.props.donationCheckbox50}
                 label='$50'
-                value={50}
+                value={5000}
                 onChange={() => {
                   this.props.dispatchUpdateStateData('', 'donationInputField');
                   this.props.dispatchUpdateStateData(!this.props.donationCheckbox50, 'donationCheckbox50');
-                  this.clearTheOtherCheckboxes(50);
-                  console.log(store.getState())
+                  this.clearTheOtherCheckboxes(5000);
+                  console.log('getState()', store.getState());
                 }}
               />
             </Form.Group>
@@ -98,29 +119,52 @@ export default class SelectDonation extends React.Component {
             
             <div className={wrapperCenterStyle} style={{ margin : '2vh 0' }}>
             {/* Semantic UI's function component was causing this issue */}
-              <input
-                type='number'
-                placeholder='Custom Amount'
-                value={this.props.donationInputField}
-                // value={store.donation_amount}
-                // defaultValue={store.donation_amount}
-                style={{marginBottom : '2vh'}}
+            
+              
+              {/*<input*/}
+                {/*type='number'*/}
+                {/*placeholder='Custom Amount'*/}
+                {/*value={this.props.donationInputField}*/}
+                {/*// value={store.donation_amount}*/}
+                {/*// defaultValue={store.donation_amount}*/}
+                {/*style={{marginBottom : '2vh'}}*/}
+                {/*onFocus={() => {*/}
+                  {/*this.props.dispatchUpdateStateData(false, 'donationCheckbox10');*/}
+                  {/*this.props.dispatchUpdateStateData(false, 'donationCheckbox25');*/}
+                  {/*this.props.dispatchUpdateStateData(false, 'donationCheckbox50');*/}
+                  {/*}*/}
+                {/*}*/}
+                {/*onChange={*/}
+                  {/*e => {*/}
+                    {/*this.props.dispatchUpdateStateData(e.target.value, 'donationInputField');*/}
+                    {/*console.log(store.getState());*/}
+                  {/*}}*/}
+              {/*/>*/}
+              <NumberFormat
+                style={{marginBottom : '2vh', maxWidth : '250px'}}
+                placeholder={'Enter a Custom Amount'}
                 onFocus={() => {
                   this.props.dispatchUpdateStateData(false, 'donationCheckbox10');
                   this.props.dispatchUpdateStateData(false, 'donationCheckbox25');
                   this.props.dispatchUpdateStateData(false, 'donationCheckbox50');
                   }
                 }
-                onChange={
-                  e => {
-                    this.props.dispatchUpdateStateData(e.target.value, 'donationInputField');
-                    console.log(store.getState());
-                  }}
+                allowNegative={false}
+                thousandSeparator
+                prefix={'$'}
+                onValueChange={dataValues => {
+                  // dataValues.value accesses the raw value
+                  const {value} = dataValues; // destruct the matching name into a const
+                  this.props.dispatchUpdateStateData(value * 100, 'donationInputField');
+                  console.log('getState()', store.getState());
+                 }
+                }
               />
             </div>
   
             <div className={wrapperCenterStyle}>
               <Button
+                disabled={this.state.canNotAdvance}
                 primary
                 onClick={(event) => {
                   event.preventDefault();
