@@ -13,6 +13,7 @@ import {Modal, Header, Button, Form, Transition, Message} from "semantic-ui-reac
 
 import Redux from "redux";
 import ReactRedux from "react-redux";
+import axios from "axios";
 import {changeCheckoutStep, log_to_console_function, set_donation_amount, updateStateData, testThunk, quoteThunk, postNewDonor} from "./actions";
 import store from "./reducer";
 import {checkoutSteps} from "./constants";
@@ -22,34 +23,45 @@ require('dotenv').load();
 /// App component
 class App extends Component {
   
+  coldStartTheBackEnd() {
+    console.log("cold start function running");
+    return axios.post('http://localhost:4000/api/donate', {
+        coldStart : true
+      })
+          .then(response => console.log(response.data.message))
+        .catch(e => console.log(e));
+  }
+  
+  componentDidMount() {
+    /* wake up the hibernating back-end */
+    this.coldStartTheBackEnd();
+  }
   
   render() {
     return (
       <div className="App">
+  
         <header className="App-header">
           <Modal
             trigger={<Button color='purple'>Donate</Button>}
             size='small'
           >
           
+          {/* For quick testing only */}
           {/*<SelectDonation {...this.props} />*/}
           {/*<PaymentDetails {...this.props} />*/}
           {/*<Referrals {...this.props} />*/}
           {/*<ArticlesList {...this.props} />*/}
-          
           
           {this.props.checkoutStep === checkoutSteps.selectDonation &&
            <SelectDonation
             dispatch_set_donation_amount = {this.props.dispatch_set_donation_amount}
             dispatchChangeCheckoutStep={this.props.dispatchChangeCheckoutStep}
              {...this.props} /> }
-           
           {this.props.checkoutStep === checkoutSteps.paymentDetails &&
             <PaymentDetails {...this.props} /> }
-          
           {this.props.checkoutStep === checkoutSteps.referrals && <Referrals {...this.props} />}
-          
-            {this.props.checkoutStep === checkoutSteps.articlesList && <ArticlesList />}
+          {this.props.checkoutStep === checkoutSteps.articlesList && <ArticlesList />}
           
           </Modal>
         </header>

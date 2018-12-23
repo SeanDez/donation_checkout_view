@@ -120,26 +120,6 @@ export default class SelectDonation extends React.Component {
             <div className={wrapperCenterStyle} style={{ margin : '2vh 0' }}>
             {/* Semantic UI's function component was causing this issue */}
             
-              
-              {/*<input*/}
-                {/*type='number'*/}
-                {/*placeholder='Custom Amount'*/}
-                {/*value={this.props.donationInputField}*/}
-                {/*// value={store.donation_amount}*/}
-                {/*// defaultValue={store.donation_amount}*/}
-                {/*style={{marginBottom : '2vh'}}*/}
-                {/*onFocus={() => {*/}
-                  {/*this.props.dispatchUpdateStateData(false, 'donationCheckbox10');*/}
-                  {/*this.props.dispatchUpdateStateData(false, 'donationCheckbox25');*/}
-                  {/*this.props.dispatchUpdateStateData(false, 'donationCheckbox50');*/}
-                  {/*}*/}
-                {/*}*/}
-                {/*onChange={*/}
-                  {/*e => {*/}
-                    {/*this.props.dispatchUpdateStateData(e.target.value, 'donationInputField');*/}
-                    {/*console.log(store.getState());*/}
-                  {/*}}*/}
-              {/*/>*/}
               <NumberFormat
                 style={{marginBottom : '2vh', maxWidth : '250px'}}
                 placeholder={'Enter a Custom Amount'}

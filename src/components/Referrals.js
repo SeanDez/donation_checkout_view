@@ -46,8 +46,9 @@ export default class Referrals extends React.Component {
   }
   
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (prevState.canNotSaveAReferral !== this.state.canNotSaveAReferral) {
+    if (prevProps.referral1EmailAddress !== this.props.referral1EmailAddress) {
       this.checkIfCanSaveAReferral();
+      console.log('local state after CDU', this.state)
     }
   }
   
@@ -78,9 +79,11 @@ export default class Referrals extends React.Component {
               placeholder="This Person's Email"
               className={inputStyle}
               style={{ maxWidth : '100%', flexBasis: '285px' }}
-              onChange={e => this.props.dispatchUpdateStateData(
-                e.target.value, 'referral1EmailAddress'
-              )}
+              onChange={e => {
+                this.props.dispatchUpdateStateData(
+                e.target.value, 'referral1EmailAddress');
+              console.log('getState()', store.getState())
+              }}
             />
           </Form.Group>
   
