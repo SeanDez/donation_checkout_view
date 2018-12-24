@@ -32,7 +32,7 @@ class App extends Component {
   
   coldStartTheBackEnd() {
     console.log("cold start function running");
-    return axios.post(process.env.REACT_APP_API_POST_URL, {
+    return axios.post(`${process.env.REACT_APP_API_POST_DOMAIN}/api/donate`, {
         coldStart : true
       })
           .then(response => console.log(response.data.message))

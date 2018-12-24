@@ -75,7 +75,7 @@ class StripeCheckoutForm extends React.Component {
             firstName : this.props.firstName,
             lastName : this.props.lastName
           };
-          return Axios.post(process.env.REACT_APP_API_POST_URL, dataObject);
+          return Axios.post(`${process.env.REACT_APP_API_POST_DOMAIN}/api/donate`, dataObject);
     
         } else if (result.error) {
           return console.log('Error: ', result.error);
@@ -101,25 +101,6 @@ class StripeCheckoutForm extends React.Component {
       outputString += stateKeyArray[i].concat(" ");
     }
     return outputString;
-  }
-  
-  validateFirstName() {
-    if (validator.isAlpha(this.props.firstName) === false && this.props.firstName !== '') {
-      const firstNameOnlyLetters = "First Name must contain only letters. ";
-      // if the state variable doesn't already contain the target string
-        // if regex match equals false
-      if (this.state.firstNameValidationWarnings.toString().includes(firstNameOnlyLetters) === false) {
-        this.setState({
-          firstNameValidationWarnings : this.state.firstNameValidationWarnings.concat([firstNameOnlyLetters])
-        })
-      }
-  } else {
-        this.setState({
-          firstNameValidationWarnings : this.state.firstNameValidationWarnings.filter(validationString => {
-            return validationString !== "First Name must contain only letters. "
-        })
-      })
-    }
   }
   
   // sort by the type of caller. See if the event property fails validation
