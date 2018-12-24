@@ -17,7 +17,16 @@ import axios from "axios";
 import {changeCheckoutStep, log_to_console_function, set_donation_amount, updateStateData, testThunk, quoteThunk, postNewDonor} from "./actions";
 import store from "./reducer";
 import {checkoutSteps} from "./constants";
-require('dotenv').load();
+import dotenv from 'dotenv';
+
+
+// const dotEnvOptions = {
+//   path: '.env',
+//   debug: true
+// };
+// const dotenvSetup = dotenv.config(dotEnvOptions);
+
+const googleEnvVariable = process.env.REACT_APP_GOOGLE || 'nothing found';
 
 
 /// App component
@@ -25,7 +34,7 @@ class App extends Component {
   
   coldStartTheBackEnd() {
     console.log("cold start function running");
-    return axios.post('http://localhost:4000/api/donate', {
+    return axios.post(process.env.REACT_APP_API_POST_URL, {
         coldStart : true
       })
           .then(response => console.log(response.data.message))
@@ -33,6 +42,13 @@ class App extends Component {
   }
   
   componentDidMount() {
+    // check if dotenv had an error
+    // if (dotenv.error) {
+    //   console.log('dotenv.error', dotenv.error);
+    // } else { console.log('dotenv.parsed', dotenv.parsed);
+    
+    
+    
     /* wake up the hibernating back-end */
     this.coldStartTheBackEnd();
   }
@@ -42,6 +58,9 @@ class App extends Component {
       <div className="App">
   
         <header className="App-header">
+  
+          <div><p>{googleEnvVariable}</p></div>
+          
           <Modal
             trigger={<Button color='purple'>Donate</Button>}
             size='small'

@@ -13,7 +13,7 @@ require("dotenv").load();
 
 ReactDOM.render(
   <Provider store={store}>
-    <StripeProvider apiKey='pk_test_bew9tLys8LOSG5rcCnJU1OvJ'>
+    <StripeProvider apiKey={process.env.REACT_APP_STRIPE_TEST_PUBLIC_KEY}>
       <AppWrapped />
     </StripeProvider>
   </Provider>

@@ -18,7 +18,7 @@ export default class Referrals extends React.Component {
     event.preventDefault();
     console.log('saveOptionalReferrals method fired');
     // Have axios do another post request
-    return Axios.post("http://localhost:4000/api/donate", {
+    return Axios.post(process.env.REACT_APP_API_POST_URL, {
       referral1FirstName    : this.props.referral1FirstName,
       referral2FirstName    : this.props.referral2FirstName,
       referral1EmailAddress : this.props.referral1EmailAddress,

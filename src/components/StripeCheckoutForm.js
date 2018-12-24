@@ -75,7 +75,7 @@ class StripeCheckoutForm extends React.Component {
             firstName : this.props.firstName,
             lastName : this.props.lastName
           };
-          return Axios.post('http://localhost:4000/api/donate', dataObject);
+          return Axios.post(process.env.REACT_APP_API_POST_URL, dataObject);
     
         } else if (result.error) {
           return console.log('Error: ', result.error);
