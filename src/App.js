@@ -20,17 +20,15 @@ import {checkoutSteps} from "./constants";
 import dotenv from 'dotenv';
 
 
-// const dotEnvOptions = {
-//   path: '.env',
-//   debug: true
-// };
-// const dotenvSetup = dotenv.config(dotEnvOptions);
-
-const googleEnvVariable = process.env.REACT_APP_GOOGLE || 'nothing found';
-
-
 /// App component
 class App extends Component {
+  
+  state = {
+    modalIsOpen : false
+  };
+  
+  openModal = () => { this.setState({ modalIsOpen : true }) };
+  closeModal = () => { this.setState({ modalIsOpen : false }) };
   
   coldStartTheBackEnd() {
     console.log("cold start function running");
@@ -38,17 +36,10 @@ class App extends Component {
         coldStart : true
       })
           .then(response => console.log(response.data.message))
-        .catch(e => console.log(e));
+        .catch(e => console.log('error: ', e));
   }
   
   componentDidMount() {
-    // check if dotenv had an error
-    // if (dotenv.error) {
-    //   console.log('dotenv.error', dotenv.error);
-    // } else { console.log('dotenv.parsed', dotenv.parsed);
-    
-    
-    
     /* wake up the hibernating back-end */
     this.coldStartTheBackEnd();
   }
@@ -58,11 +49,18 @@ class App extends Component {
       <div className="App">
   
         <header className="App-header">
-  
-          <div><p>{googleEnvVariable}</p></div>
           
           <Modal
-            trigger={<Button color='purple'>Donate</Button>}
+            // closeIcon
+            open={this.state.modalIsOpen}
+            onClose={this.closeModal}
+            trigger={<Button
+              color='purple'
+              onClick={e => {
+                e.preventDefault();
+                this.openModal();
+              }}
+            >Donate</Button>}
             size='small'
           >
           
@@ -70,7 +68,7 @@ class App extends Component {
           {/*<SelectDonation {...this.props} />*/}
           {/*<PaymentDetails {...this.props} />*/}
           {/*<Referrals {...this.props} />*/}
-          {/*<ArticlesList {...this.props} />*/}
+          <ArticlesList {...this.props} closeModal={this.closeModal} />
           
           {this.props.checkoutStep === checkoutSteps.selectDonation &&
            <SelectDonation
@@ -80,7 +78,7 @@ class App extends Component {
           {this.props.checkoutStep === checkoutSteps.paymentDetails &&
             <PaymentDetails {...this.props} /> }
           {this.props.checkoutStep === checkoutSteps.referrals && <Referrals {...this.props} />}
-          {this.props.checkoutStep === checkoutSteps.articlesList && <ArticlesList />}
+          {this.props.checkoutStep === checkoutSteps.articlesList && <ArticlesList {...this.props} />}
           
           </Modal>
         </header>

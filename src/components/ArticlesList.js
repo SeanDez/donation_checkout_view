@@ -2,7 +2,7 @@ import React from "react";
 import {css} from "emotion";
 import {Button, Modal, Form, Input, Radio} from 'semantic-ui-react';
 
-export default () => (
+export default (props) => (
   <React.Fragment>
     <Modal.Header style={{ textAlign: 'center' }}>Process Complete. If you'd like to read more about our work, here are some of our most popular articles</Modal.Header>
     {/*<p className={header_p_style}>Subheading text here</p>*/}
@@ -22,7 +22,7 @@ export default () => (
         />
         
         <div className={button_group_style}>
-          <Button primary>Close</Button>
+          <Button primary onClick={() => props.closeModal()}>Close</Button>
         </div>
       
       </Form>
