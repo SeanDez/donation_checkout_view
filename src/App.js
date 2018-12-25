@@ -40,6 +40,8 @@ class App extends Component {
   }
   
   componentDidMount() {
+    // make sure the env variables are loading correctly
+    console.log('process.env.REACT_APP_API_POST_DOMAIN', process.env.REACT_APP_API_POST_DOMAIN);
     /* wake up the hibernating back-end */
     this.coldStartTheBackEnd();
   }
@@ -68,7 +70,7 @@ class App extends Component {
           {/*<SelectDonation {...this.props} />*/}
           {/*<PaymentDetails {...this.props} />*/}
           {/*<Referrals {...this.props} />*/}
-          <ArticlesList {...this.props} closeModal={this.closeModal} />
+          {/*<ArticlesList {...this.props} closeModal={this.closeModal} />*/}
           
           {this.props.checkoutStep === checkoutSteps.selectDonation &&
            <SelectDonation
